@@ -4,6 +4,8 @@ import bottle
 
 ser = serial.Serial('/dev/cu.usbserial-A601EWJ8', 9600)
 # print(ser.port)
+
+
 @bottle.route('/arduino/')
 def getArduino():
     #/dev/tty.<port where your arduino is>
@@ -12,7 +14,8 @@ def getArduino():
     #ports.  Also in Arduino IDE, go to Tools> Serial Port to
     #see which one you're at
     # ser = serial.Serial('/dev/cu.usbserial-A601EWJ8', 9600)
-    # print('done')
+    # Declear ser before everything happens will prevent delays
+    # re-open a serial port may take up to 4 seconds.
     a = ser.readline()
     d = {}
     d['val'] = a
