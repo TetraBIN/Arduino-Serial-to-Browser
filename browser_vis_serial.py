@@ -1,8 +1,12 @@
 import serial
 import sys
 import bottle
+from serial.tools import list_ports
 # from bottle import Bottle, request, response, run
-ser = serial.Serial('/dev/cu.usbserial-A601EWJ8', 9600)
+# bottle.run(reloader=True)
+portName = list(list_ports.comports())[-1][0]
+# ser = serial.Serial('/dev/cu.usbserial-A601EWJ8', 9600)
+ser = serial.Serial(portName, 9600)
 # print(ser.port)
 # class HTTPResponse(Response, BottleException):
 #     def __init__(self, body='', status=None, headers=None, **more_headers):
@@ -60,6 +64,6 @@ def index():
     return open('index.html', 'r')
 
 # These are for debugging, you can uncomment these, and comment out the bottle.run() if you need to debug
-bottle.debug(True)
-bottle.run(reloader = True )
-# bottle.run()
+# bottle.debug(True)
+# bottle.run(reloader = True )
+bottle.run(host='0.0.0.0', port=8080, debug=True)

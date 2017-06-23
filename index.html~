@@ -11,7 +11,7 @@
 		#vals{
 		font-family:Helvetica;
 		font-weight : 100;
-		font-size : 200px;
+		font-size : 100px;
 		color:#00A6FF;
 	}
 
@@ -59,6 +59,6 @@ ARDUINO SERIAL TO BROWSER
 
 		</script>
 
-<div id='footer'>by Kawandeep Virdee at <a href="http://www.whichlight.com">whichlight </a> </div>
+<!-- <div id='footer'>by Kawandeep Virdee at <a href="http://www.whichlight.com">whichlight </a> </div> -->
 	</body>
 </html> 
