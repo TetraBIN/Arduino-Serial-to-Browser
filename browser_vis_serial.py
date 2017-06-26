@@ -2,6 +2,7 @@ import serial
 import sys
 import bottle
 from serial.tools import list_ports
+import threading
 # from bottle import Bottle, request, response, run
 # bottle.run(reloader=True)
 portName = list(list_ports.comports())[-1][0]
@@ -24,9 +25,45 @@ ser = serial.Serial(portName, 9600)
 #         response._cookies = self._cookies
 #         response.body = self.body
 
+def read_bin(serialport):
+    ser = serialport
+    if ser.isOpen():
+        ser_str = ser.readline()
+        l = ser_str.rstrip('\r\n').split(',')
+    else:
+        l = ['11111111', '0', '0', '0', '0', '0', '0', '20']
+    return l
+
+class SerialThread(threading.Thread):
+
+    def __init__(self, ser_port):
+        threading.Thread.__init__(self)
+        self.ser = ser_port
+        self.data_str = ''
+        print 'Thread begins'
+
+    def read(self):
+        self.data_str = read_bin(self.ser)
+        # self.data_str = 'OK'
+        # print self.data_str
+        pass
+
+    def run(self):
+        while True:
+            self.read()
+s = SerialThread(ser)
+s.start()
+
 @bottle.hook('after_request')
 def enable_cors():
     bottle.response.headers['Access-Control-Allow-Origin'] = '*'
+
+@bottle.route('/ad/')
+def getArduino():
+    a = s.data_str
+    d = {}
+    d['val'] = a
+    return d
 
 @bottle.route('/arduino/')
 def getArduino():

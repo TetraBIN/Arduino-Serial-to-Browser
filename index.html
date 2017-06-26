@@ -47,7 +47,8 @@ ARDUINO SERIAL TO BROWSER
             var allVals = [];
             function getArduinoVals(){    
                 
-                $.getJSON('/arduino/', function(data){
+                // $.getJSON('/arduino/', function(data){
+                $.getJSON('/ad/', function(data){
                         
             $('#vals').html(data.val); 
             console.log(data.val);           
